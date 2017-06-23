@@ -1,5 +1,5 @@
 # svg-zoom
-A light jQuery plugin for zooming svg.It is just 2 kb before gzip. 基于jQuery的简洁的svg放大缩小插件,普通压缩后仅2kb。
+A light jQuery plugin for zooming svg.It is just 3 kb before gzip. 基于jQuery的简洁的svg放大缩小插件,普通压缩后仅3kb。
 
 ## quick start
 1.add jquery and svg-zoom files
