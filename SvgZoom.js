@@ -172,4 +172,4 @@
     }
   }
   exports.SvgZoom = SvgZoom
-})(UCD, jQuery)
+})(window, jQuery)
