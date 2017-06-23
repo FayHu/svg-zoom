@@ -14,7 +14,7 @@ A light jQuery plugin for zooming svg.It is just 2 kb before gzip. 基于jQuery�
   var svgZoom = new SvgZoom('#svgId')
 ```
 
-## config
+## configs
 
 * If you want to override the defaults, you can optionally specify the arguments:
 
@@ -27,7 +27,13 @@ A light jQuery plugin for zooming svg.It is just 2 kb before gzip. 基于jQuery�
       initZoom: 1,
       center: true,
       viewClass: 'svgzoom-view',
-      zoomSelector: '',
+      //class selector will be faild when IE,should replace with [class='classname']
+      zoomSelector: '',
       dragCursorStyle: 'move'
   })
 ```
+
+## methods
+* setZoom(zoom:Number) 
+* setMouseWheel(enable:Boolean)
+* center
