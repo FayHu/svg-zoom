@@ -27,7 +27,7 @@ A light jQuery plugin for zooming svg.It is just 3 kb before gzip. 基于jQuery�
       initZoom: 1,
       center: true,
       viewClass: 'svgzoom-view',
-      //class selector will be faild when IE,should replace with [class='classname']
+      //class selector depends on jq's version may be faild when IE,should replace with [class='classname']
       zoomSelector: '',
       dragCursorStyle: 'move'
   })
