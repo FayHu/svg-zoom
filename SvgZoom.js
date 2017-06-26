@@ -32,12 +32,13 @@
     mouseWheel: true,
     zoomSpeed: 0.065,
     maxZoom: Number.POSITIVE_INFINITY,
-    minZoom: 0.2,
+    minZoom: 0.5,
     initZoom: 1,
     center: true,
     viewClass: 'svgzoom-view',
     zoomSelector: '',
-    dragCursorStyle: 'move'
+    dragCursorStyle: 'move',
+    onZoomed: $.noop
   }
 
   SvgZoom.prototype = {
@@ -73,9 +74,8 @@
         .on('mousedown', $.proxy(this._handleMouseDown, this))
         .on('mouseup', $.proxy(this._handleMouseUp, this))
         .on('mousemove', $.proxy(this._handleMouseMove, this))
-        .on('mouseout', $.proxy(this._handleMouseUp, this))
         .on('mousewheel DOMMouseScroll', $.proxy(this._handleMouseWheel, this))
-
+        .on('mouseleave', $.proxy(this._handleMouseUp, this))
     },
 
     _handleMouseDown: function (e) {
@@ -98,7 +98,7 @@
         var
           diffX = e.clientX - this.dragStartX,
           diffY = e.clientY - this.dragStartY,
-          viewBoxScale = this._getViewBoxScale()
+          viewBoxScale = this._getViewBoxScale() / this.state.zoom
 
         this.view.style.cursor = this.options.dragCursorStyle
         this.state.x += (diffX / viewBoxScale)
@@ -123,21 +123,29 @@
 
     _getViewBoxScale: function () {
       //the scale should contain custom zoom
-      return this.viewBoxScale = this.view.getBoundingClientRect().width / this.element.viewBox.baseVal.width / this.state.zoom;
+      return this.viewBoxScale = this.view.getBoundingClientRect().width / this.element.viewBox.baseVal.width;
     },
 
     setZoom: function (zoom) {
+      var
+        opts = this.options;
+
+      if (zoom < opts.minZoom) zoom = opts.minZoom
+      if (zoom > opts.maxZoom) zoom = opts.maxZoom
+
       var
         viewRect = this.view.getBoundingClientRect(),
         deltaZoom = zoom - this.state.zoom,
         scale = this._getViewBoxScale()
 
       this.state.zoom = zoom
+
       //set zoom origin
-      this.state.x -= deltaZoom * viewRect.width / 2/scale
-      this.state.y -= deltaZoom * viewRect.height / 2/scale
+      this.state.x -= deltaZoom * viewRect.width / 2 / scale
+      this.state.y -= deltaZoom * viewRect.height / 2 / scale
 
       this.update()
+      this.options.onZoomed.call(this)
       return this
     },
 
@@ -172,4 +180,4 @@
     }
   }
   exports.SvgZoom = SvgZoom
-})(window, jQuery)
+})(UCD, jQuery)
