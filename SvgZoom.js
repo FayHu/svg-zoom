@@ -158,7 +158,7 @@
       var
         eleRect = this.element.getBoundingClientRect(),
         viewRect = this.view.getBoundingClientRect(),
-        viewBoxScale = this._getViewBoxScale()
+        viewBoxScale = this._getViewBoxScale() / this.state.zoom
 
       this.state.x += ((eleRect.width - viewRect.width) / 2 - (viewRect.left - eleRect.left)) / viewBoxScale
       this.state.y += ((eleRect.height - viewRect.height) / 2 - (viewRect.top - eleRect.top)) / viewBoxScale
@@ -180,4 +180,4 @@
     }
   }
   exports.SvgZoom = SvgZoom
-})(UCD, jQuery)
+})(window, jQuery)
